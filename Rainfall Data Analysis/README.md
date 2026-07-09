@@ -1,6 +1,6 @@
-# Practical Data Science with Python
+# Rainfall Data Analysis
 
-## Rainfall Data Analysis Overview
+## Overview
 
 This project applies the data science process to real-world rainfall data. It involves loading, cleaning, and preparing raw climate data before conducting exploratory analysis. Through systematic data processing and visualization, the aim is to uncover patterns and trends in rainfall over time.
 
