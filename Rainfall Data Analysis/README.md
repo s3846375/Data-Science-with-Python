@@ -6,32 +6,50 @@ This project applies the data science process to real-world rainfall data. It in
 
 ## Dataset
 
-The analysis is based on a dataset (Data.csv) containing daily rainfall measurements.
+The raw dataset (`Data.csv`) contains daily rainfall records with the following columns:
 
-- Year, Month, Day: Date components.
+| Column                          | Description                                                             |
+| ------------------------------- | ----------------------------------------------------------------------- |
+| `Year`                          | Year of the observation                                                 |
+| `Month`                         | Month of the observation (may contain names, abbreviations, or numbers) |
+| `Day`                           | Day of the observation (may contain numbers or spelled-out words)       |
+| `Rainfall amount (millimetres)` | Recorded daily rainfall in mm                                           |
 
-- Rainfall amount (millimetres): Daily precipitation records.
+The data spans from 2013 to 2023 and contains several data quality issues that are addressed during cleaning (see below).
 
-## Features
+## Requirements
 
-- Handling Missing Values: Rows with null values (NaN) were identified and removed.
+- Python 3
+- [pandas](https://pandas.pydata.org/)
+- [matplotlib](https://matplotlib.org/)
 
-- Standardizing Dates: Converted mixed month formats and text-based days into numerical formats.
+## Analysis Tasks
 
-- Data Validation: Identified and removed unreasonable dates, such as February 48th or December 200th.
+### Task 1: Data Preparation
 
-- Filtered the dataset to focus strictly on the period between January 1, 2013, and December 31, 2023.
+Cleans and prepares the raw rainfall data:
 
-## Key Findings & Observations
+- Loads `Data.csv` and inspects data types and shape
+- Removes rows containing missing values
+- Converts `Year`, `Month`, and `Day` into a single `date` column, handling:
+  - Month names/abbreviations (e.g. `"April"`, `"Jan"`) converted to numeric months
+  - Day values spelled out as words (e.g. `"nine"`) converted to numbers
+  - Invalid or unparseable dates (e.g. day `48`, month `200`) removed
+- Filters out dates outside the valid range (2013-01-01 to 2023-12-31)
+- Removes rainfall outliers (values `< 0` mm or `> 10,000` mm)
+- Exports the cleaned dataset to `Data_clean.csv`
 
-Based on the exploratory visualizations:
+### Task 2: Data Exploration
 
-- Highest Rainfall Year: Based on the analysis, 2020 has the highest cumulative rainfall, experienced significantly higher rainfall in the early months of the year.
+Using the cleaned dataset, the notebook explores rainfall patterns through several sub-tasks:
 
-- Lowest Rainfall Year: Conversely, 2019 was the driest year overall, showing consistently lower rainfall totals across most months compared to the rest of the decade.
+- **2.1 — Daily rainfall by month (2014):** Reshapes 2014 data into a day-by-month table and identifies the highest daily rainfall recorded in each month, visualized as a bar chart.
+- **2.2 — Yearly and monthly trends (2015–2017):** Compares total yearly rainfall and monthly rainfall patterns across three years using bar and line charts.
+- **2.3 — Highest vs. lowest rainfall years:** Identifies the top 3 and bottom 3 years by total rainfall across the full dataset (2013–2023) and compares the wettest year (2020) against the driest year (2019) on a monthly basis.
+- **2.4 — Long-term trend (last 10 years):** Examines total and average yearly rainfall from 2014 to 2023 to reveal how rainfall has changed over the last decade.
 
-- Wettest Months: April, October, and December typically experience the highest rainfall and the most significant year-to-year variability.
+## Key Findings
 
-- Driest Months: June, July, and August remain consistently dry, with rainfall almost always staying below 60 mm.
-
-- Recent Trends: There was a notable spike in rainfall in early 2020. However, by 2023, rainfall amounts dropped significantly across almost every month.
+- The years **2020, 2021, and 2022** recorded the highest total rainfall, while **2013, 2014, and 2019** recorded the lowest.
+- **2020** was the wettest year overall (786.8 mm), while **2019** was the driest (374.4 mm) — a difference of over 400 mm.
+- Rainfall generally trended upward from 2014 to 2017, dipped sharply in 2019, then peaked in 2020 before gradually declining, though remaining relatively high through 2021–2022.
